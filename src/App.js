@@ -1,9 +1,9 @@
-
+import Saper from "./Saper";
 
 function App() {
   return (
     <div className="App">
-      <p>123</p>
+      <Saper />
     </div>
   );
 }
