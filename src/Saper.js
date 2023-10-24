@@ -12,15 +12,24 @@ const Saper = () => {
   }
 
   useEffect(() => {
-    createMatrix()
-  }, [])
+    createMatrix();
+  }, []);
 
   return (
     <div className="border border-grey-500 w-full max-w-3xl mx-auto mt-9">
       <p className="text-center">Sapper game</p>
-      <div className="border border-grey-800 grid grid-cols-8">
-        {matrix.map((box, index) => (
-          <div key={index} className=" w-16 h-16 border border-grey-800">1</div>
+      <div className="border border-grey-800 grid grid-cols-8 ">
+        {matrix.map((row, rowIndex) => (
+          <div key={rowIndex}>
+            {row.map((cell, columnIndex) => (
+              <div
+                key={columnIndex}
+                className=" w-24 h-20 border border-grey-800"
+              >
+                {columnIndex}
+              </div>
+            ))}
+          </div>
         ))}
       </div>
     </div>
