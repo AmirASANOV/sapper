@@ -19,6 +19,19 @@ const Game: React.FC<IGameProps> = (props) => {
     createMatrix(false, props.width, props.height)
   );
 
+  const handleCellOpen = (rowIndex: number, cellIndex: number) => {
+    const newIsOpenedMatrix = [...isOpenedMatrix];
+    newIsOpenedMatrix[rowIndex][cellIndex] = true;
+    setIsOpenedMatrix(newIsOpenedMatrix);
+  };
+
+  const handleCellMark = (rowIndex: number, cellIndex: number) => {
+    const newIsMarkedMatrix = [...isMarkedMatrix];
+    newIsMarkedMatrix[rowIndex][cellIndex] =
+      !newIsMarkedMatrix[rowIndex][cellIndex];
+    setIsMarkedMatrix(newIsMarkedMatrix);
+  };
+
   return (
     <div>
       <Field
@@ -32,6 +45,8 @@ const Game: React.FC<IGameProps> = (props) => {
           [5, 4, -1, 3, 7, 8, 2, 0],
           [5, 4, -1, 3, 7, 8, 2, 0],
         ]}
+        onCellOpen={handleCellOpen}
+        onCellMark={handleCellMark}
         isMarkedMatrix={isMarkedMatrix}
         isOpenedMatrix={isOpenedMatrix}
       />
