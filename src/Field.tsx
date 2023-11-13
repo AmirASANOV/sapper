@@ -1,5 +1,6 @@
 import React from "react";
 import Cell from "./Cell";
+import rand from "./utils/getRandomNumber";
 
 interface IFieldProps {
   fieldValues: number[][];
