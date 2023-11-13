@@ -28,6 +28,8 @@ const Game: React.FC<IGameProps> = (props) => {
     GameStatus.notStarted
   );
 
+  const [countOpenedCells, setCountOpenedCells] = useState(0);
+
   const handleCellOpen = (rowIndex: number, cellIndex: number) => {
     if (
       gameStatus === GameStatus.notStarted ||
@@ -47,12 +49,13 @@ const Game: React.FC<IGameProps> = (props) => {
         setGameStatus(GameStatus.started);
       }
 
-      const newIsOpenedMatrix = openCells(
+      const { newIsOpenedMatrix, counterOpenedCells } = openCells(
         field,
         isOpenedMatrix,
         cellIndex,
         rowIndex
       );
+      setCountOpenedCells(countOpenedCells + counterOpenedCells);
 
       setIsOpenedMatrix(newIsOpenedMatrix);
 
@@ -83,6 +86,8 @@ const Game: React.FC<IGameProps> = (props) => {
           ? "You win!"
           : ""}
       </div>
+
+      <h1>{countOpenedCells}</h1>
 
       <Field
         fieldValues={fieldValues}

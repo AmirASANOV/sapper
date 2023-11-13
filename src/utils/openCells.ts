@@ -4,19 +4,20 @@ export default function openCells(
   userX: number,
   userY: number
 ) {
-  console.log(fieldValues);
+  let counterOpenedCells = 1;
+
   const queue = [{ x: userX, y: userY }];
   const visited = new Set();
   const newIsOpenedMatrix = [...isOpenedMatrix];
-
   const width = fieldValues[0].length;
   const height = fieldValues.length;
 
   newIsOpenedMatrix[userY][userX] = true;
 
   if (fieldValues[userY][userX] !== 0) {
-    return newIsOpenedMatrix;
+    return { newIsOpenedMatrix, counterOpenedCells };
   }
+
   while (queue.length) {
     const cell = queue.shift()!;
     visited.add(`${cell.x},${cell.y}`);
@@ -26,12 +27,12 @@ export default function openCells(
         if (x >= 0 && x < width && y >= 0 && y < height) {
           if (fieldValues[y][x] === 0 && !visited.has(`${x},${y}`))
             queue.push({ x, y });
-
+          if (!newIsOpenedMatrix[y][x]) counterOpenedCells++;
           newIsOpenedMatrix[y][x] = true;
         }
       }
     }
   }
 
-  return newIsOpenedMatrix;
+  return { newIsOpenedMatrix, counterOpenedCells };
 }

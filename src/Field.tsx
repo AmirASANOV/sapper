@@ -18,11 +18,9 @@ const Field: React.FC<IFieldProps> = (props) => {
   ) => {
     if (event.nativeEvent.button === 0) {
       props.onCellOpen(rowIndex, cellIndex);
-      console.log("leftBtn", rowIndex, cellIndex);
     } else if (event.nativeEvent.button === 2) {
       event.preventDefault();
       props.onCellMark(rowIndex, cellIndex);
-      console.log("rightBtn", rowIndex, cellIndex);
     }
   };
 
