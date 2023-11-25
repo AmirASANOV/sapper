@@ -36,6 +36,7 @@ const Game: React.FC<IGameProps> = (props) => {
       gameStatus === GameStatus.started
     ) {
       let field = fieldValues;
+
       if (gameStatus === GameStatus.notStarted) {
         const bombs = generateBombs(
           props.bombs,
@@ -44,6 +45,7 @@ const Game: React.FC<IGameProps> = (props) => {
           cellIndex,
           rowIndex
         );
+
         field = generateFieldMatrix(props.height, props.width, bombs);
         setFieldValues(field);
         setGameStatus(GameStatus.started);
@@ -61,6 +63,13 @@ const Game: React.FC<IGameProps> = (props) => {
 
       if (fieldValues[rowIndex][cellIndex] === -1) {
         setGameStatus(GameStatus.gameOver);
+      }
+
+      if (
+        countOpenedCells + counterOpenedCells ===
+        props.width * props.height - props.bombs
+      ) {
+        setGameStatus(GameStatus.finished);
       }
     }
   };
