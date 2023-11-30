@@ -6,6 +6,7 @@ import generateFieldMatrix from "../utils/generateFieldMatrix";
 import openCells from "../utils/openCells";
 import { GameStatus } from "../types";
 import openNearestCells from "../utils/openNearestCells";
+import StopWatch from "./StopWatch";
 
 interface IGameProps {
   width: number;
@@ -120,6 +121,10 @@ const Game: React.FC<IGameProps> = (props) => {
           : gameStatus === GameStatus.finished
           ? "You win!"
           : ""}
+      </div>
+
+      <div className=" mb-4">
+        <StopWatch gameStatus={gameStatus} />
       </div>
 
       <Field
