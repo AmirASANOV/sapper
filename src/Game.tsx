@@ -5,6 +5,7 @@ import generateBombs from "./utils/generateBombs";
 import generateFieldMatrix from "./utils/generateFieldMatrix";
 import openCells from "./utils/openCells";
 import { GameStatus } from "./types";
+import openNearestCells from "./utils/openNearestCells";
 
 interface IGameProps {
   width: number;
@@ -36,6 +37,7 @@ const Game: React.FC<IGameProps> = (props) => {
       gameStatus === GameStatus.started
     ) {
       let field = fieldValues;
+      let increaseCounter = 0;
 
       if (gameStatus === GameStatus.notStarted) {
         const bombs = generateBombs(
@@ -51,22 +53,38 @@ const Game: React.FC<IGameProps> = (props) => {
         setGameStatus(GameStatus.started);
       }
 
-      const { newIsOpenedMatrix, counterOpenedCells } = openCells(
-        field,
-        isOpenedMatrix,
-        cellIndex,
-        rowIndex
-      );
-      setCountOpenedCells(countOpenedCells + counterOpenedCells);
+      if (!isOpenedMatrix[rowIndex][cellIndex]) {
+        const { newIsOpenedMatrix, counterOpenedCells } = openCells(
+          field,
+          isOpenedMatrix,
+          cellIndex,
+          rowIndex
+        );
+        setCountOpenedCells(countOpenedCells + counterOpenedCells);
+        increaseCounter = counterOpenedCells;
+        setIsOpenedMatrix(newIsOpenedMatrix);
+      } else {
+        const { newIsOpenedMatrix, counterOpenedCells, isSuccess } =
+          openNearestCells(
+            fieldValues,
+            isOpenedMatrix,
+            isMarkedMatrix,
+            cellIndex,
+            rowIndex
+          );
+        setCountOpenedCells(countOpenedCells + counterOpenedCells);
+        setIsOpenedMatrix(newIsOpenedMatrix);
+        increaseCounter = counterOpenedCells;
 
-      setIsOpenedMatrix(newIsOpenedMatrix);
+        if (!isSuccess) setGameStatus(GameStatus.gameOver);
+      }
 
       if (fieldValues[rowIndex][cellIndex] === -1) {
         setGameStatus(GameStatus.gameOver);
       }
 
       if (
-        countOpenedCells + counterOpenedCells ===
+        countOpenedCells + increaseCounter ===
         props.width * props.height - props.bombs
       ) {
         setGameStatus(GameStatus.finished);
@@ -86,6 +104,14 @@ const Game: React.FC<IGameProps> = (props) => {
     }
   };
 
+  const handleRestart = () => {
+    setFieldValues(createMatrix(0, props.width, props.height));
+    setGameStatus(GameStatus.notStarted);
+    setIsOpenedMatrix(createMatrix(false, props.width, props.height));
+    setIsMarkedMatrix(createMatrix(false, props.width, props.height));
+    setCountOpenedCells(0);
+  };
+
   return (
     <div>
       <div className=" h-8">
@@ -96,8 +122,6 @@ const Game: React.FC<IGameProps> = (props) => {
           : ""}
       </div>
 
-      <h1>{countOpenedCells}</h1>
-
       <Field
         fieldValues={fieldValues}
         onCellOpen={handleCellOpen}
@@ -105,6 +129,13 @@ const Game: React.FC<IGameProps> = (props) => {
         isMarkedMatrix={isMarkedMatrix}
         isOpenedMatrix={isOpenedMatrix}
       />
+
+      <button
+        onClick={handleRestart}
+        className=" px-5 py-1 mt-6 border border-red-600"
+      >
+        Restart
+      </button>
     </div>
   );
 };

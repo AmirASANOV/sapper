@@ -14,6 +14,7 @@ const Cell: React.FC<ICellProps> = (props) => {
   if (props.isOpened)
     return (
       <div
+        onClick={props.onCellClick}
         className={
           "flex justify-center items-center border border-red-600 w-6 h-6 p-4"
         }
