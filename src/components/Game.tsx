@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Field from "./Field";
-import createMatrix from "./utils/createMatrixWithValue";
-import generateBombs from "./utils/generateBombs";
-import generateFieldMatrix from "./utils/generateFieldMatrix";
-import openCells from "./utils/openCells";
-import { GameStatus } from "./types";
-import openNearestCells from "./utils/openNearestCells";
+import createMatrix from "../utils/createMatrixWithValue";
+import generateBombs from "../utils/generateBombs";
+import generateFieldMatrix from "../utils/generateFieldMatrix";
+import openCells from "../utils/openCells";
+import { GameStatus } from "../types";
+import openNearestCells from "../utils/openNearestCells";
 
 interface IGameProps {
   width: number;
