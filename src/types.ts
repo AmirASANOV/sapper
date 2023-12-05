@@ -4,3 +4,9 @@ export enum GameStatus {
   gameOver,
   finished,
 }
+
+export enum LevelRoutes {
+  easy = "/easy",
+  medium = "/medium",
+  hard = "/hard",
+}

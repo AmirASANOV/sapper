@@ -1,15 +1,17 @@
 import React from "react";
 import s from "./Menu.module.scss";
 import { Link } from "react-router-dom";
+import levels from "../levelsConfig";
 
 const Menu: React.FC = () => {
   return (
     <div className={s.wrapper}>
       <div className={s.window}>
         <p>Change difficulty:</p>
-        <Link to="/easy">easy</Link>
-        <Link to="/medium">medium</Link>
-        <Link to="/hard">hard</Link>
+
+        {(Object.keys(levels) as (keyof typeof levels)[]).map((level) => (
+          <Link to={levels[level].link}>{levels[level].name}</Link>
+        ))}
       </div>
     </div>
   );
