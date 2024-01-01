@@ -19,6 +19,7 @@ export default function openCells(
   }
 
   while (queue.length) {
+    console.log(queue.length);
     const cell = queue.shift()!;
     visited.add(`${cell.x},${cell.y}`);
 
